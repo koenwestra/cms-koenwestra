@@ -11,19 +11,18 @@
 |
 */
 
+//Route::get('/', function () {
+//    return view('welcome');
+//});
+
 Route::get('/', function () {
-    return view('home');
+    return view('blog/home');
 });
 
-Route::get('ads', function () {
-    return view('ads');
-});
 
-Route::get('categories', function () {
-    return view('categories');
-});
 
-Route::get('admin', function () {
-    return view('admin');
-});
+Auth::routes();
 
+Route::get('/home', 'HomeController@index')->name('home');
+
+Route::resource('posts', 'PostController');
