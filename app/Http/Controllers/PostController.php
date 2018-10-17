@@ -15,7 +15,10 @@ class PostController extends Controller
      */
     public function index()
     {
-        return view('adminPanel/home');
+        $loggedInUserId = Auth::id();
+        $posts = Post::all()->where('user_id', $loggedInUserId);
+
+        return view('adminPanel/home', ['posts'=>$posts]);
     }
 
     /**

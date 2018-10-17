@@ -19,11 +19,15 @@
         </thead>
 
         <tbody>
-            <th>sample post id</th>
-            <td>post title sample</td>
-            <td>content</td>
-            <td>edit button</td>
-            <td>delete button</td>
+        @foreach($posts as $post)
+            <tr>
+                <th>{{ $post->id }}</th>
+                <td>{{ $post->title }}</td>
+                <td>{{ $post->body }}</td>
+                <td>edit button</td>
+                <td>delete button</td>
+            </tr>
+        @endforeach
         </tbody>
     </table>
 @endsection

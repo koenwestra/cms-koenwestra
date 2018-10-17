@@ -13,7 +13,7 @@
             </div>
             <div class="form-group">
                 <label for="body">Body:</label>
-                <textarea name="body" id="" cols="30" rows="10" class="form-control"></textarea>
+                <textarea name="body" id="article-ckeditor" cols="30" rows="10" class="form-control"></textarea>
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
             <a href="{{ route('posts.index') }}" class="btn btn-default pull-right">Go Back</a>
