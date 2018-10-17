@@ -8,6 +8,11 @@ use Auth;
 
 class PostController extends Controller
 {
+    public function publicHomePage() {
+        $posts = Post::paginate(10);
+
+        return view('blog/home', ['posts'=>$posts]);
+    }
     /**
      * Display a listing of the resource.
      *
