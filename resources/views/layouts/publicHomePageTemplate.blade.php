@@ -65,10 +65,9 @@
                 <li class="dropdown">
                     <a href="" class="dropdown-toggle" data-toggle="dropdown">Sort Posts by <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="">Top 10 Most recent posts</a></li>
-                        <li><a href="">Top 10 Liked Posts</a></li>
-                        <li><a href="">Top 10 Most Commented Posts</a></li>
-                        <li><a href="">Top 10 Most Visited Posts</a></li>
+                        <li><a href="{{ route('getPublic', ['type'=>'recentPosts']) }}">Top 10 Most recent posts</a></li>
+                        <li><a href="{{ route('getPublic', ['type'=>'mostCommented']) }}">Top 10 Most Commented Posts</a></li>
+                        <li><a href="{{ route('getPublic', ['type'=>'mostVisited']) }}">Top 10 Most Visited Posts</a></li>
                     </ul>
                 </li>
             </ul>

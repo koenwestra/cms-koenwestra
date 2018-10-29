@@ -8,10 +8,29 @@ use Auth;
 
 class PostController extends Controller
 {
-    public function publicHomePage() {
-        $posts = Post::paginate(10);
+    public function publicHomePage(Request $request) {
+        if ($request->input('type') == 'recentPosts') {
+            $posts = Post::orderBy('created_at', 'desc')->paginate(10);
+            $organization = 'Top 10 Most Recent Posts';
+        } else if ($request->input('type') == 'mostCommented') {
+            $posts = Post::orderBy('comment_count', 'desc')->paginate(10);
+            $organization = 'Top 10 Most Commented Posts';
+        } else if ($request->input('type') == 'mostVisited') {
+            $posts = Post::orderBy('visit_count', 'desc')->paginate(10);
+            $organization = 'Top 10 Most Visited Posts';
+        } else {
+            $posts = Post::orderBy('created_at', 'asc')->paginate(10);
+            $organization = 'Top 10 Most Recent Posts';
+        }
 
-        return view('blog/home', ['posts'=>$posts]);
+
+        $data = array(
+          'posts' => $posts,
+          'organization' => $organization
+        );
+
+
+        return view('blog/home', $data);
     }
     /**
      * Display a listing of the resource.
@@ -44,6 +63,11 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'title' => 'required|unique:posts|max:255',
+            'body' => 'required',
+        ]);
+
         $post = new Post;
 
         $postTitle = $request->title;
@@ -53,6 +77,8 @@ class PostController extends Controller
         $post->user_id = $postUserId;
         $post->title = $postTitle;
         $post->body = $postBody;
+        $post->comment_count = 0;
+        $post->visit_count = 0;
 
         $post->save();
         return redirect()->route('posts.index');
@@ -84,7 +110,9 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        //
+        $post = Post::find($id);
+
+        return view('adminPanel.edit', ['post'=>$post]);
     }
 
     /**
@@ -96,7 +124,37 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $post = Post::find($id);
+
+        if (isset($request->commentCount)) {
+            $commentCount = $request->commentCount;
+            $post->comment_count = $commentCount;
+
+        }
+
+        if (isset($request->visitCount)) {
+            $visitCount = $request->visitCount;
+            $post->visit_count = $visitCount;
+        }
+
+        if (isset($request->title)) {
+            $post->title = $request->title;
+        }
+
+        if (isset($request->body)) {
+            $post->body = $request->body;
+        }
+
+        $post->save();
+
+        if (isset($request->editForm)) {
+            return redirect()->route('posts.index');
+
+        } else {
+          return redirect()->route('posts.show', ['id'=>$id]);
+        }
+
+
     }
 
     /**
@@ -107,6 +165,10 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $post = Post::find($id);
+
+        $post->delete();
+
+        return redirect()->route('posts.index');
     }
 }

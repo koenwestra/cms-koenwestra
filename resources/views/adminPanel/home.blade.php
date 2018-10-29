@@ -14,7 +14,7 @@
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                 <a class="dropdown-item" href="{{ route('logout') }}"
                    onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
+                   document.getElementById('logout-form').submit();">
                     {{ __('Logout') }}
                 </a>
 
@@ -26,7 +26,7 @@
     </div>
 
     <h1>Admin Panel</h1>
-
+    <a href="http://localhost/blog/public/" class="btn btn-default pull-left">Go back to Home</a>
     <a href="{{ route('posts.create') }}" class="btn btn-primary pull-right">Add New Blog Post</a>
 
     <br><br><br>
@@ -46,8 +46,15 @@
                 <th>{{ $post->id }}</th>
                 <td>{{ $post->title }}</td>
                 <td>{{ $post->body }}</td>
-                <td>edit button</td>
-                <td>delete button</td>
+                <td><a href="{{ route('posts.edit', ['id'=>$post->id]) }}" class="btn btn-info">Edit</a></td>
+                <td>
+                    <form action="{{ route('posts.destroy', ['id'=>$post->id]) }}" method="post">
+                        {{ csrf_field() }}
+                        <input type="hidden" name="_method" value="DELETE">
+
+                        <input class="btn btn-danger" type="submit" value="Delete">
+                    </form>
+                </td>
             </tr>
         @endforeach
         </tbody>
