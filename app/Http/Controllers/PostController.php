@@ -8,6 +8,16 @@ use Auth;
 
 class PostController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth', ['except' => ['publicHomePage', 'show']]);
+    }
+
     public function publicHomePage(Request $request) {
         if ($request->input('type') == 'recentPosts') {
             $posts = Post::orderBy('created_at', 'desc')->paginate(10);
@@ -31,6 +41,8 @@ class PostController extends Controller
 
 
         return view('blog/home', $data);
+
+
     }
     /**
      * Display a listing of the resource.
