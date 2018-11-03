@@ -25,7 +25,11 @@ Auth::routes();
 Route::get('/', 'PostController@publicHomePage')->name('getPublic');
 Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('posts', 'PostController');
+Route::resource('users', 'UserController');
 Route::get('/users/logout', 'Auth\LoginController@userLogout')->name('user.logout');
+
+
+
 
 Route::prefix('admin')->group(function() {
     Route::get('/login', 'Auth\AdminLoginController@showLoginForm')->name('admin.login');

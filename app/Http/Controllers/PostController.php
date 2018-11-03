@@ -92,6 +92,7 @@ class PostController extends Controller
         $post->comment_count = 0;
         $post->visit_count = 0;
 
+
         $post->save();
         return redirect()->route('posts.index');
     }

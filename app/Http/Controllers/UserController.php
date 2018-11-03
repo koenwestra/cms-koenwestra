@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\User;
 use Auth;
 
-class AdminController extends Controller
+class UserController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -53,7 +53,7 @@ class AdminController extends Controller
 
         $user->delete();
 
-        return redirect()->route('admin');
+        return redirect()->route('users.index');
     }
 
 

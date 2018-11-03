@@ -36,6 +36,7 @@
             <th>id</th>
             <th>title</th>
             <th>body</th>
+            <th>status</th>
             <th>edit</th>
             <th>delete</th>
         </thead>
@@ -46,6 +47,8 @@
                 <th>{{ $post->id }}</th>
                 <td>{{ $post->title }}</td>
                 <td>{{ $post->body }}</td>
+                <td>
+                    <span class="label label-{{ ($post->status) ? 'success' : 'danger' }}"> {{ ($post->status) ? ' Active ' : 'Inactive' }}</span></td>
                 <td><a href="{{ route('posts.edit', ['id'=>$post->id]) }}" class="btn btn-info">Edit</a></td>
                 <td>
                     <form action="{{ route('posts.destroy', ['id'=>$post->id]) }}" method="post">
@@ -60,5 +63,7 @@
         </tbody>
     </table>
 @endsection
+
+
 
 
