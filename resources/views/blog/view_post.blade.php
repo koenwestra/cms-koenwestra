@@ -19,6 +19,8 @@
     <div class="row">
         <h1>{{ $post->title }}</h1>
         <p>{{ $post->body }}</p>
+        <hr>
+        <p>Posted in: {{ $post->category->name }}</p>
     </div>
 
     <div class="row">

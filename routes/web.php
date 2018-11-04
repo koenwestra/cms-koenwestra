@@ -24,6 +24,7 @@ use Illuminate\Support\Facades\Input;
 
 Auth::routes();
 
+// Posts routes
 Route::get('/', 'PostController@publicHomePage')->name('getPublic');
 Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('posts', 'PostController');
@@ -32,6 +33,10 @@ Route::get('/users/logout', 'Auth\LoginController@userLogout')->name('user.logou
 
 Route::post('posts', ['uses' => 'PostController@hidePost']);
 
+//Categories routes
+Route::resource('categories', 'CategoryController', ['except' => ['create']]);
+
+// Search users in admin routes amd logic
 Route::get ( '/admin', function () {
     return view ( '/admin' );
 } );
@@ -45,6 +50,7 @@ Route::any ( '/admin', function () {
 } );
 
 Route::prefix('admin')->group(function() {
+    // Admin Login routes
     Route::get('/login', 'Auth\AdminLoginController@showLoginForm')->name('admin.login');
     Route::post('/login', 'Auth\AdminLoginController@login')->name('admin.login.submit');
     Route::get('/', 'AdminController@index')->name('admin.dashboard');
