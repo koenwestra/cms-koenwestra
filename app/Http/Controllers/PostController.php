@@ -29,7 +29,7 @@ class PostController extends Controller
             $posts = Post::orderBy('visit_count', 'desc')->paginate(10);
             $organization = 'Top 10 Most Visited Posts';
         } else {
-            $posts = Post::orderBy('created_at', 'asc')->paginate(10);
+            $posts = Post::orderBy('created_at', 'desc')->paginate(10);
             $organization = 'Top 10 Most Recent Posts';
         }
 
@@ -75,10 +75,9 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'title' => 'required|unique:posts|max:255',
-            'body' => 'required',
-        ]);
+        $this->validate($request,[
+            'title' =>'required|unique:posts|max:255',
+            'body' =>'required']);
 
         $post = new Post;
 
@@ -137,6 +136,10 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->validate($request,[
+            'title' =>'required',
+            'body' =>'required']);
+
         $post = Post::find($id);
 
         if (isset($request->commentCount)) {
@@ -164,7 +167,7 @@ class PostController extends Controller
             return redirect()->route('posts.index');
 
         } else {
-          return redirect()->route('posts.show', ['id'=>$id]);
+          return redirect()->route('posts.index');
         }
 
 
@@ -181,6 +184,27 @@ class PostController extends Controller
         $post = Post::find($id);
 
         $post->delete();
+
+        return redirect()->route('posts.index');
+    }
+
+    public function hidePost(Request $request)
+    {
+        $hide = $request->input('hide');
+        $id = $request->input('id');
+
+        $post = Post::find($id);
+        if($hide == "on")
+        {
+            $post->status = 1;
+            $post->save();
+        }
+        else
+        {
+            $post->status = 0;
+            $post->save();
+        }
+
 
         return redirect()->route('posts.index');
     }

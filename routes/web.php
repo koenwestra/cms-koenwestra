@@ -30,6 +30,8 @@ Route::resource('posts', 'PostController');
 Route::resource('users', 'UserController');
 Route::get('/users/logout', 'Auth\LoginController@userLogout')->name('user.logout');
 
+Route::post('posts', ['uses' => 'PostController@hidePost']);
+
 Route::get ( '/admin', function () {
     return view ( '/admin' );
 } );

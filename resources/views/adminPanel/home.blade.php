@@ -34,7 +34,7 @@
                                 <th>id</th>
                                 <th>title</th>
                                 <th>body</th>
-                                <th>status</th>
+                                <th>Aan/Uit</th>
                                 <th>edit</th>
                                 <th>delete</th>
                                 </thead>
@@ -46,7 +46,16 @@
                                         <td>{{ $post->title }}</td>
                                         <td>{{ $post->body }}</td>
                                         <td>
-                                            <span class="label label-{{ ($post->status) ? 'success' : 'danger' }}"> {{ ($post->status) ? ' Active ' : 'Inactive' }}</span></td>
+                                            <form action="{{action('PostController@hidePost')}}" method="post">
+                                                <label class="switch">
+                                                    {{csrf_field()}}
+                                                    <input type="hidden" name="id" value="{{$post->id}}">
+                                                    <input type="checkbox" name="hide" <?php if($post->status == 1){ ?> checked <?php } ?>>
+                                                    <span class="slider round"></span>
+                                                </label>
+                                                <button class="" type="submit">Save</button>
+                                            </form>
+                                        </td>
                                         <td><a href="{{ route('posts.edit', ['id'=>$post->id]) }}" class="btn btn-info">Edit</a></td>
                                         <td>
                                             <form action="{{ route('posts.destroy', ['id'=>$post->id]) }}" method="post">
