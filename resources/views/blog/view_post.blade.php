@@ -22,7 +22,7 @@
     </div>
 
     <div class="row">
-        <a href="http://localhost/blog/public/" class="btn btn-default pull-right">Go back to Home</a>
+        <a href="/" class="btn btn-default pull-right">Go back to Home</a>
     </div>
 
     <div class="row text-center" id="facebookCommentContainer">

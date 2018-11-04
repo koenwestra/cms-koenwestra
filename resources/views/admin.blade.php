@@ -14,7 +14,7 @@
                         </div>
                     @endif
 
-                    @component('components.who')
+                    @component('components.who-admin')
                     @endcomponent
 
 
@@ -85,30 +85,46 @@
                     </form>
                     <br>
                     <div class="card-header">All users</div>
+                    <form action="/admin" method="POST" role="search">
+                        {{ csrf_field() }}
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="q"
+                                   placeholder="Search users">
+                            <input class="btn btn-default" type="submit" >
+                        </div>
+                    </form>
 
-
-                        <div class="well well-lg">
-                            <table class="table">
+                    <div class="well well-lg">
+                        @if(isset($details))
+                            <p style="margin-left: 10px;"> You searched for: <b> {{ $query }} </b></p>
+                            <table class="table table-striped">
+                                <thead>
                                 <tr>
                                     <th>Name</th>
                                     <th>Email</th>
                                     <th>Delete</th>
                                 </tr>
-                                @foreach($users as $user)
-                                <tr>
-                                    <td>{{ $user->name }}</td>
-                                    <td>{{ $user->email }}</td>
-                                    <td><form action="{{ route('users.destroy', ['id'=>$user->id]) }}" method="post">
-                                            {{ csrf_field() }}
-                                            <input type="hidden" name="_method" value="DELETE">
+                                </thead>
+                                <tbody>
+                                @foreach($details as $user)
+                                    <tr>
+                                        <td>{{$user->name}}</td>
+                                        <td>{{$user->email}}</td>
+                                        <td><form action="{{ route('users.destroy', ['id'=>$user->id]) }}" method="post">
+                                                {{ csrf_field() }}
+                                                <input type="hidden" name="_method" value="DELETE">
 
-                                            <input class="btn btn-danger" type="submit" value="Delete">
-                                        </form></td>
-                                </tr>
+                                                <input class="btn btn-danger" type="submit" value="Delete">
+                                            </form></td>
+                                    </tr>
                                 @endforeach
+                                </tbody>
                             </table>
-                            <br>
-                        </div>
+                        @endif
+                    </div>
+
+
+
 
 
                 </div>

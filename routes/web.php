@@ -19,6 +19,8 @@
 //return view('blog/home');
 //});
 
+use App\User;
+use Illuminate\Support\Facades\Input;
 
 Auth::routes();
 
@@ -28,8 +30,17 @@ Route::resource('posts', 'PostController');
 Route::resource('users', 'UserController');
 Route::get('/users/logout', 'Auth\LoginController@userLogout')->name('user.logout');
 
-
-
+Route::get ( '/admin', function () {
+    return view ( '/admin' );
+} );
+Route::any ( '/admin', function () {
+    $q = Input::get ( 'q' );
+    $user = User::where ( 'name', 'LIKE', '%' . $q . '%' )->orWhere ( 'email', 'LIKE', '%' . $q . '%' )->get ();
+    if (count ( $user ) > 0)
+        return view ( '/admin' )->withDetails ( $user )->withQuery ( $q );
+    else
+        return view ( '/admin' )->withMessage ( 'No Details found. Try to search again !' );
+} );
 
 Route::prefix('admin')->group(function() {
     Route::get('/login', 'Auth\AdminLoginController@showLoginForm')->name('admin.login');
@@ -44,6 +55,14 @@ Route::prefix('admin')->group(function() {
     Route::get('/password/reset/{token}', 'Auth\AdminResetPasswordController@showResetForm')->name('admin.password.reset');
 
 });
+
+
+
+
+
+
+
+
 
 
 
