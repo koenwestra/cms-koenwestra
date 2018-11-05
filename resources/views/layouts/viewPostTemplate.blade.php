@@ -27,7 +27,7 @@
         var js, fjs = d.getElementsByTagName(s)[0];
         if (d.getElementById(id)) return;
         js = d.createElement(s); js.id = id;
-        js.src = 'https://connect.facebook.net/nl_NL/sdk.js#xfbml=1&version=v3.1&appId=631373760334365&autoLogAppEvents=1';
+        js.src = 'https://connect.facebook.net/nl_NL/sdk.js#xfbml=1&version=v3.2&appId=631373760334365&autoLogAppEvents=1';
         fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));</script>
 <div class="container">
@@ -35,11 +35,6 @@
         @guest
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-            </li>
-            <li class="nav-item">
-                @if (Route::has('register'))
-                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                @endif
             </li>
         @else
             <li class="nav-item dropdown">

@@ -31,7 +31,9 @@ Route::resource('posts', 'PostController');
 Route::resource('users', 'UserController');
 Route::get('/users/logout', 'Auth\LoginController@userLogout')->name('user.logout');
 
-Route::post('posts', ['uses' => 'PostController@hidePost']);
+
+Route::post('store', 'PostController@store')->name('posts.store');
+Route::post('hidePost', 'PostController@hidePost')->name('posts.hidePost');
 
 //Categories routes
 Route::resource('categories', 'CategoryController', ['except' => ['create']]);

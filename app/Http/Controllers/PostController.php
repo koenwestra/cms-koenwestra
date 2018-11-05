@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+
 use Illuminate\Http\Request;
 use App\Post;
+use App\Category;
 use Auth;
 
 class PostController extends Controller
@@ -64,7 +66,9 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('adminPanel/create');
+        $categories = Category::all();
+
+        return view('adminPanel/create')->withCategories($categories);
     }
 
     /**
@@ -76,18 +80,22 @@ class PostController extends Controller
     public function store(Request $request)
     {
         $this->validate($request,[
-            'title' =>'required|unique:posts|max:255',
-            'body' =>'required']);
+            'title'         =>'required|unique:posts|max:255',
+            'body'          =>'required',
+            'category_id'   => 'required|integer'
+        ]);
 
         $post = new Post;
 
         $postTitle = $request->title;
         $postBody = $request->body;
+        $postCategoryId = $request->category_id;
         $postUserId = Auth::id();
 
         $post->user_id = $postUserId;
         $post->title = $postTitle;
         $post->body = $postBody;
+        $post->category_id = $postCategoryId;
         $post->comment_count = 0;
         $post->visit_count = 0;
 
@@ -136,9 +144,6 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request,[
-            'title' =>'required',
-            'body' =>'required']);
 
         $post = Post::find($id);
 

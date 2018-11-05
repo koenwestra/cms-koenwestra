@@ -46,7 +46,7 @@
                                         <td>{{ $post->title }}</td>
                                         <td>{{ $post->body }}</td>
                                         <td>
-                                            <form action="{{action('PostController@hidePost')}}" method="post">
+                                            <form action="{{ route('posts.hidePost') }}" method="post">
                                                 <label class="switch">
                                                     {{csrf_field()}}
                                                     <input type="hidden" name="id" value="{{$post->id}}">

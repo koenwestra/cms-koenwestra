@@ -14,8 +14,9 @@
                 <p>{{ $post->body }}</p>
                 <br>
                 <br>
-                <p>Vistit count: {{ $post->visit_count }}</p>
+                <p>Visit count: {{ $post->visit_count }}</p>
                 <p>Comment count: {{ $post->comment_count }}</p>
+                <p>Category: {{ $post->category->name }}</p>
                 <p>Post created at: {{ date('d F Y', strtotime($post->created_at)) }} at {{ date('G:i', strtotime($post->created_at)) }}</p>
                 <a href="{{ route('posts.show', ['id'=>$post->id]) }}" class="btn btn-default pull-right">View post</a>
                 &nbsp;
