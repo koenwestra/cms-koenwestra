@@ -8,6 +8,7 @@ use App\Post;
 use App\Category;
 use Auth;
 
+
 class PostController extends Controller
 {
     /**
@@ -25,7 +26,7 @@ class PostController extends Controller
             $posts = Post::orderBy('created_at', 'desc')->paginate(10);
             $organization = 'Top 10 Most Recent Posts';
         } else if ($request->input('type') == 'mostCommented') {
-            $posts = Post::orderBy('comment_count', 'desc')->paginate(10);
+            $posts = Post::withCount('comments')->orderBy('comments_count', 'desc')->paginate(10);
             $organization = 'Top 10 Most Commented Posts';
         } else if ($request->input('type') == 'mostVisited') {
             $posts = Post::orderBy('visit_count', 'desc')->paginate(10);
@@ -34,6 +35,9 @@ class PostController extends Controller
             $posts = Post::orderBy('created_at', 'desc')->paginate(10);
             $organization = 'Top 10 Most Recent Posts';
         }
+
+
+
 
 
         $data = array(
@@ -130,9 +134,15 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        $post = Post::find($id);
+        if (Auth::user()->id==Post::find($id)->user_id) {
+            $post = Post::find($id);
 
-        return view('adminPanel.edit', ['post'=>$post]);
+            return view('adminPanel.edit', ['post' => $post]);
+        }
+        else
+        {
+            return redirect()->route('posts.index');
+        }
     }
 
     /**
@@ -186,11 +196,16 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        $post = Post::find($id);
+        if (Auth::user()->id==Post::find($id)->user_id) {
+            $post = Post::find($id);
 
-        $post->delete();
+            $post->delete();
 
-        return redirect()->route('posts.index');
+            return redirect()->route('posts.index');
+        }
+        else {
+            return redirect()->route('posts.index');
+        }
     }
 
     public function hidePost(Request $request)

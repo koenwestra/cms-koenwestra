@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Blog Admin Panel')
+@section('title', 'KoenWestra Admin | Posts')
 
 @section('content')
 
@@ -50,10 +50,10 @@
                                                 <label class="switch">
                                                     {{csrf_field()}}
                                                     <input type="hidden" name="id" value="{{$post->id}}">
-                                                    <input type="checkbox" name="hide" <?php if($post->status == 1){ ?> checked <?php } ?>>
+                                                    <input type="checkbox" name="hide" onchange="submit()" <?php if($post->status == 1){ ?> checked <?php } ?>>
                                                     <span class="slider round"></span>
                                                 </label>
-                                                <button class="" type="submit">Save</button>
+
                                             </form>
                                         </td>
                                         <td><a href="{{ route('posts.edit', ['id'=>$post->id]) }}" class="btn btn-info">Edit</a></td>
@@ -62,7 +62,9 @@
                                                 {{ csrf_field() }}
                                                 <input type="hidden" name="_method" value="DELETE">
 
-                                                <input class="btn btn-danger" type="submit" value="Delete">
+                                                {{--<input class="btn btn-danger" type="submit" value="Delete">--}}
+                                                <input class="btn btn-danger" type="submit" value="Delete" onclick="return confirm('Are you sure?')"><i class="fa fa-trash"></i>
+
                                             </form>
                                         </td>
                                     </tr>

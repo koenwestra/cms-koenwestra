@@ -1,6 +1,6 @@
 @extends('layouts.publicHomePageTemplate')
 
-@section('title', 'Blog Public Home Page')
+@section('title', 'KoenWestra Blog | Home')
 
 @section('content')
 
@@ -14,8 +14,7 @@
                 <p>{{ $post->body }}</p>
                 <br>
                 <br>
-                <p>Visit count: {{ $post->visit_count }}</p>
-                <p>Comment count: {{ $post->comment_count }}</p>
+                <p>Comment count: {{ $post->comments()->count() }}</p>
                 <p>Category: {{ $post->category->name }}</p>
                 <p>Post created at: {{ date('d F Y', strtotime($post->created_at)) }} at {{ date('G:i', strtotime($post->created_at)) }}</p>
                 <a href="{{ route('posts.show', ['id'=>$post->id]) }}" class="btn btn-default pull-right">View post</a>

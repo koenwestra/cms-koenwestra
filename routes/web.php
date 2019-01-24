@@ -21,6 +21,7 @@
 
 use App\User;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Auth;
 
 Auth::routes();
 
@@ -37,6 +38,9 @@ Route::post('hidePost', 'PostController@hidePost')->name('posts.hidePost');
 
 //Categories routes
 Route::resource('categories', 'CategoryController', ['except' => ['create']]);
+
+//Comments
+Route::post('comments/{post_id}', ['uses' => 'CommentsController@store', 'as' => 'comments.store']);
 
 // Search users in admin routes amd logic
 Route::get ( '/admin', function () {

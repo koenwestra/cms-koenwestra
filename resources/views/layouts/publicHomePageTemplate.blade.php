@@ -54,7 +54,7 @@
     </div>
 
     <div>
-        <h1>Welcome to my blog</h1>
+        <h1>KoenWestra Blog</h1>
     </div>
 
 
@@ -67,7 +67,7 @@
                     <ul class="dropdown-menu">
                         <li><a href="{{ route('getPublic', ['type'=>'recentPosts']) }}">Top 10 Most recent posts</a></li>
                         <li><a href="{{ route('getPublic', ['type'=>'mostCommented']) }}">Top 10 Most Commented Posts</a></li>
-                        <li><a href="{{ route('getPublic', ['type'=>'mostVisited']) }}">Top 10 Most Visited Posts</a></li>
+                        {{--<li><a href="{{ route('getPublic', ['type'=>'mostVisited']) }}">Top 10 Most Visited Posts</a></li>--}}
                     </ul>
                 </li>
             </ul>

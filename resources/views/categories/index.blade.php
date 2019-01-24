@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', '| All Categories')
+@section('title', 'KoenWestra Admin | All Categories')
 
 @section('content')
 
