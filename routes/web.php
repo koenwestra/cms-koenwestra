@@ -40,7 +40,14 @@ Route::post('hidePost', 'PostController@hidePost')->name('posts.hidePost');
 Route::resource('categories', 'CategoryController', ['except' => ['create']]);
 
 //Comments
+Route::resource('/comments', 'CommentsController');
 Route::post('comments/{post_id}', ['uses' => 'CommentsController@store', 'as' => 'comments.store']);
+Route::get('comments/{id}/edit', ['uses' => 'CommentsController@edit', 'as' => 'comments.edit']);
+Route::put('comments/{id}', ['uses' => 'CommentsController@update', 'as' => 'comments.update']);
+Route::delete('comments/{id}', ['uses' => 'CommentsController@destroy', 'as' => 'comments.destroy']);
+Route::get('comments/{id}/delete', ['uses' => 'CommentsController@delete', 'as' => 'comments.delete']);
+
+
 
 // Search users in admin routes amd logic
 Route::get ( '/admin', function () {

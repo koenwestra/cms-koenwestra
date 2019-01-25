@@ -9,6 +9,8 @@
 
     <div class="container">
         <a href="/" class="btn btn-outline-primary pull-left">Go back to Home</a>
+        <a style="float:right;" class="btn btn-outline-primary" href="{{ route('posts.index') }}">{{ __('Manage Blog Posts') }}</a>
+        <a style="float:right; margin-right: 5px;" class="btn btn-outline-primary" href="{{ route('comments.index') }}">{{ __('Manage Blog Comments') }}</a>
         <br>
         <br>
         <div class="row justify-content-center">

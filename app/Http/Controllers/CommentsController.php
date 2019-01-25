@@ -3,12 +3,19 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+
+use App\Http\Requests;
 use App\Comment;
 use App\Post;
-//use Session;
+use Auth;
+
 
 class CommentsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth', ['except' => 'store']);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -16,7 +23,11 @@ class CommentsController extends Controller
      */
     public function index()
     {
-        //
+
+        $loggedInUserId = Auth::id();
+        $comments = Post::all()->where('user_id', $loggedInUserId);
+
+        return view('adminPanel/comments', ['posts'=>$comments]);
     }
 
     /**
@@ -65,9 +76,9 @@ class CommentsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($post_id)
     {
-        //
+
     }
 
     /**
@@ -78,7 +89,8 @@ class CommentsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $comment = Comment::find($id);
+        return view ('comments.edit')->withComment($comment);
     }
 
     /**
@@ -90,7 +102,25 @@ class CommentsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
+        $comment = Comment::find($id);
+
+        $this->validate($request, array('comment' => 'required'));
+
+        $comment->comment = $request->comment;
+        $comment->save();
+
+        $loggedInUserId = Auth::id();
+        $comments = Post::all()->where('user_id', $loggedInUserId);
+
+
+        return view('adminPanel/comments', ['posts'=>$comments]);
+    }
+
+    public function delete($id)
+    {
+        $comment = Comment::find($id);
+        return view('comments.delete')->withComment($comment);
     }
 
     /**
@@ -101,6 +131,12 @@ class CommentsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $comment = Comment::find($id);
+        $comment->delete();
+
+        $loggedInUserId = Auth::id();
+        $comments = Post::all()->where('user_id', $loggedInUserId);
+
+        return view('adminPanel/comments', ['posts'=>$comments]);
     }
 }

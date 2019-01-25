@@ -76,6 +76,7 @@
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="{{ route('posts.index') }}">Manage Blog Posts</a></li>
                     <li><a href="{{ route('categories.index') }}">Manage Categories</a></li>
+                    <li><a href="{{ route('comments.index') }}">Manage Blog Comments</a></li>
                 </ul>
             @endif
         </div>
